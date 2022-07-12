@@ -37,3 +37,4 @@ class MS:
 ms = MS()
 ms.merge_sort(0,len(ms.a) - 1)
 print(ms.a)
+#commit 1
