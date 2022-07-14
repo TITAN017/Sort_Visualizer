@@ -49,7 +49,7 @@ class Bars(pygame.sprite.Group):
                 pass
         else:
             self.recent = pygame.time.get_ticks()
-            while pygame.time.get_ticks() - self.recent <= 100:
+            while pygame.time.get_ticks() - self.recent <= 0:
                 pass
 
     def check_sort(self):
@@ -309,6 +309,9 @@ class Bars(pygame.sprite.Group):
 
         for i in range(1,len(self.sprite_list)):
             self.custom_sort_mechanism(i)
+            self.wait()
+
+        self.end = True
 
     def custom_sort_mechanism(self,current):
         i,j,self.select = 0,current - 1,current
@@ -319,6 +322,8 @@ class Bars(pygame.sprite.Group):
                 i = mid
             else:
                 j = mid
+            self.comparison += 1
+            self.input_check()
 
         temp = self.sprite_list.pop(current)
         self.victim_1 = i
@@ -326,14 +331,20 @@ class Bars(pygame.sprite.Group):
 
         if temp.value < self.sprite_list[i].value:
             self.sprite_list.insert(i,temp)
-        elif temp.value > self.sprite_list[j]:
+            self.swap += current - i + 1
+        elif temp.value > self.sprite_list[j].value:
             self.sprite_list.insert(j + 1,temp)
+            self.swap += current - j
         else:
             self.sprite_list.insert(j,temp)
+            self.swap += current - j + 1
 
-        for k in range(current):
+        self.comparison += 1
+
+        for k in range(i,current+1):
             self.sprite_list[k].rect.bottomleft = (k * self.width,800)
             self.custom_draw()
+            self.input_check()
 
 
     def sort_swap(self,i,j):

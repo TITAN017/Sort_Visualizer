@@ -111,7 +111,7 @@ while True:
         if bars_group.sort_type == 1:
 
             bars_group.custom_draw()
-            bars_group.merge_sort_mechanism(0,value - 1)
+            bars_group.custom_sort()
 
         else:
 
